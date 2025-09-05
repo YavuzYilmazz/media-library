@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from './user.service';
 import { ConfigService } from '../config/config';
@@ -48,7 +52,10 @@ export class AuthService {
     }
 
     // Validate password
-    const isPasswordValid = await this.userService.validatePassword(user, password);
+    const isPasswordValid = await this.userService.validatePassword(
+      user,
+      password,
+    );
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -80,7 +87,7 @@ export class AuthService {
 
       const tokens = await this.generateTokens(user._id, user.email);
       return tokens;
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException('Invalid refresh token');
     }
   }

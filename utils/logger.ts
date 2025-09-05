@@ -16,35 +16,37 @@ export class Logger {
       format: winston.format.combine(
         winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
         winston.format.errors({ stack: true }),
-        winston.format.json()
+        winston.format.json(),
       ),
       defaultMeta: { service: 'media-library-backend' },
       transports: [
         new winston.transports.Console({
           format: winston.format.combine(
             winston.format.colorize(),
-            winston.format.printf(({ timestamp, level, message, context, service }) => {
-              const ctx = context || this.context || 'Application';
-              return `${timestamp} [${service}] [${ctx}] ${level}: ${message}`;
-            })
-          )
+            winston.format.printf(
+              ({ timestamp, level, message, context, service }) => {
+                const ctx = context || this.context || 'Application';
+                return `${timestamp} [${service}] [${ctx}] ${level}: ${message}`;
+              },
+            ),
+          ),
         }),
         // Error logs
-        new winston.transports.File({ 
-          filename: path.join(logsDir, 'error.log'), 
+        new winston.transports.File({
+          filename: path.join(logsDir, 'error.log'),
           level: 'error',
           maxsize: 5242880, // 5MB
           maxFiles: 5,
         }),
         // Warning logs
-        new winston.transports.File({ 
-          filename: path.join(logsDir, 'warn.log'), 
+        new winston.transports.File({
+          filename: path.join(logsDir, 'warn.log'),
           level: 'warn',
           maxsize: 5242880, // 5MB
           maxFiles: 5,
         }),
         // Combined logs
-        new winston.transports.File({ 
+        new winston.transports.File({
           filename: path.join(logsDir, 'combined.log'),
           maxsize: 5242880, // 5MB
           maxFiles: 5,

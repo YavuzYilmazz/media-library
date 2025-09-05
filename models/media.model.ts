@@ -3,9 +3,9 @@ import { Document, Types } from 'mongoose';
 
 export type MediaDocument = Media & Document;
 
-@Schema({ 
+@Schema({
   timestamps: true,
-  versionKey: false
+  versionKey: false,
 })
 export class Media {
   @Prop({ required: true, type: Types.ObjectId, ref: 'User' })

@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Media, MediaDocument } from '../models/media.model';
@@ -14,17 +19,17 @@ export class MediaService {
     private readonly configService: ConfigService,
   ) {}
 
-  async uploadMedia(
-    file: any,
-    user: UserDocument,
-  ): Promise<MediaDocument> {
+  async uploadMedia(file: any, user: UserDocument): Promise<MediaDocument> {
     // Check if file exists
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
 
     // Validate file type (only JPEG)
-    if (!file.mimetype || (!file.mimetype.includes('jpeg') && !file.mimetype.includes('jpg'))) {
+    if (
+      !file.mimetype ||
+      (!file.mimetype.includes('jpeg') && !file.mimetype.includes('jpg'))
+    ) {
       throw new BadRequestException('Only JPEG files are allowed');
     }
 
@@ -63,14 +68,18 @@ export class MediaService {
     return media.save();
   }
 
-  async getUserMedia(user: UserDocument, page: number = 1, limit: number = 10): Promise<{
+  async getUserMedia(
+    user: UserDocument,
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<{
     media: MediaDocument[];
     total: number;
     page: number;
     limit: number;
   }> {
     const skip = (page - 1) * limit;
-    
+
     const [media, total] = await Promise.all([
       this.mediaModel
         .find({ ownerId: user._id })
@@ -91,7 +100,7 @@ export class MediaService {
 
   async getMediaById(id: string, user: UserDocument): Promise<MediaDocument> {
     const media = await this.mediaModel.findById(id).exec();
-    
+
     if (!media) {
       throw new NotFoundException('Media not found');
     }
@@ -106,7 +115,7 @@ export class MediaService {
 
   async deleteMedia(id: string, user: UserDocument): Promise<void> {
     const media = await this.mediaModel.findById(id).exec();
-    
+
     if (!media) {
       throw new NotFoundException('Media not found');
     }
@@ -125,12 +134,15 @@ export class MediaService {
     await this.mediaModel.findByIdAndDelete(id);
   }
 
-  async getMediaPermissions(id: string, user: UserDocument): Promise<{
+  async getMediaPermissions(
+    id: string,
+    user: UserDocument,
+  ): Promise<{
     ownerId: string;
     allowedUserIds: string[];
   }> {
     const media = await this.mediaModel.findById(id).exec();
-    
+
     if (!media) {
       throw new NotFoundException('Media not found');
     }
@@ -153,7 +165,7 @@ export class MediaService {
     user: UserDocument,
   ): Promise<MediaDocument> {
     const media = await this.mediaModel.findById(id).exec();
-    
+
     if (!media) {
       throw new NotFoundException('Media not found');
     }
@@ -178,13 +190,16 @@ export class MediaService {
     return media.save();
   }
 
-  async getMediaFile(id: string, user: UserDocument): Promise<{
+  async getMediaFile(
+    id: string,
+    user: UserDocument,
+  ): Promise<{
     filePath: string;
     fileName: string;
     mimeType: string;
   }> {
     const media = await this.getMediaById(id, user);
-    
+
     if (!fs.existsSync(media.filePath)) {
       throw new NotFoundException('Media file not found on disk');
     }

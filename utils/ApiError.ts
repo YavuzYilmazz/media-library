@@ -6,7 +6,7 @@ export class ApiError extends Error {
     message: string,
     statusCode: number = 500,
     isOperational: boolean = true,
-    stack: string = ''
+    stack: string = '',
   ) {
     super(message);
     this.statusCode = statusCode;

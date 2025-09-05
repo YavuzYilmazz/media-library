@@ -11,7 +11,10 @@ import * as compression from 'compression';
 import * as cors from 'cors';
 import * as rateLimit from 'express-rate-limit';
 
-import { ConfigService, ConfigModule as CustomConfigModule } from './config/config';
+import {
+  ConfigService,
+  ConfigModule as CustomConfigModule,
+} from './config/config';
 import { GlobalErrorFilter } from './middlewares/error.middleware';
 
 // Controllers
@@ -60,7 +63,12 @@ import { JwtStrategy } from './middlewares/auth.middleware';
       }),
     }),
   ],
-  controllers: [AuthController, UserController, MediaController, HealthController],
+  controllers: [
+    AuthController,
+    UserController,
+    MediaController,
+    HealthController,
+  ],
   providers: [
     ConfigService,
     AuthService,
@@ -78,7 +86,9 @@ export class AppModule {
   static setupSwagger(app: INestApplication): void {
     const config = new DocumentBuilder()
       .setTitle('Media Library API')
-      .setDescription('NestJS + MongoDB Media Library API with JWT Authentication')
+      .setDescription(
+        'NestJS + MongoDB Media Library API with JWT Authentication',
+      )
       .setVersion('1.0')
       .addBearerAuth(
         {
@@ -102,7 +112,7 @@ export class AppModule {
     app.use(helmet.default());
     app.use(compression.default());
     app.use(cors.default());
-    
+
     // Rate limiting
     app.use(
       rateLimit.default({

@@ -6,14 +6,16 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(email: string, password: string, name: string): Promise<UserDocument> {
+  async create(
+    email: string,
+    password: string,
+    name: string,
+  ): Promise<UserDocument> {
     const saltRounds = 12;
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    
+
     const user = new this.userModel({
       email,
       passwordHash,
@@ -32,7 +34,10 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
-  async validatePassword(user: UserDocument, password: string): Promise<boolean> {
+  async validatePassword(
+    user: UserDocument,
+    password: string,
+  ): Promise<boolean> {
     return bcrypt.compare(password, user.passwordHash);
   }
 

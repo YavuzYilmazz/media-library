@@ -1,7 +1,6 @@
 import { Injectable, Module } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config();
 
 @Injectable()
@@ -18,7 +17,6 @@ export class ConfigService {
     return process.env[key] === 'true';
   }
 
-  // Specific getters for common config values
   get mongoUri(): string {
     return this.get('MONGO_URI');
   }

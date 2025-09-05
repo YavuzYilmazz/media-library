@@ -17,22 +17,18 @@ import {
 } from './config/config';
 import { GlobalErrorFilter } from './middlewares/error.middleware';
 
-// Controllers
 import { AuthController } from './controllers/auth.controller';
 import { UserController } from './controllers/user.controller';
 import { MediaController } from './controllers/media.controller';
 import { HealthController } from './controllers/health.controller';
 
-// Services
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { MediaService } from './services/media.service';
 
-// Models
 import { User, UserSchema } from './models/user.model';
 import { Media, MediaSchema } from './models/media.model';
 
-// Middleware & Guards
 import { JwtAuthGuard } from './middlewares/auth.middleware';
 import { JwtStrategy } from './middlewares/auth.middleware';
 
@@ -108,23 +104,17 @@ export class AppModule {
   }
 
   static setupMiddleware(app: INestApplication): void {
-    // Security middleware
     app.use(helmet.default());
     app.use(compression.default());
     app.use(cors.default());
 
-    // Rate limiting
     app.use(
       rateLimit.default({
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // limit each IP to 100 requests per windowMs
+        windowMs: 15 * 60 * 1000,
+        max: 100,
       }),
     );
 
-    // Global validation pipe (will use Joi through pipes)
-    // Custom validation will be handled by individual route pipes
-
-    // Global error filter
     app.useGlobalFilters(new GlobalErrorFilter());
   }
 }

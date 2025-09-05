@@ -20,12 +20,10 @@ export class MediaService {
   ) {}
 
   async uploadMedia(file: any, user: UserDocument): Promise<MediaDocument> {
-    // Check if file exists
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
 
-    // Validate file type (only JPEG)
     if (
       !file.mimetype ||
       (!file.mimetype.includes('jpeg') && !file.mimetype.includes('jpg'))
@@ -33,29 +31,24 @@ export class MediaService {
       throw new BadRequestException('Only JPEG files are allowed');
     }
 
-    // Validate file size
     if (file.size > this.configService.maxFileSize) {
       throw new BadRequestException(
         `File size exceeds limit of ${this.configService.maxFileSize} bytes`,
       );
     }
 
-    // Ensure upload directory exists
     const uploadDir = this.configService.uploadDir;
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
 
-    // Generate unique filename
     const timestamp = Date.now();
     const extension = path.extname(file.originalname);
     const filename = `${timestamp}-${Math.random().toString(36).substring(7)}${extension}`;
     const filePath = path.join(uploadDir, filename);
 
-    // Save file to disk
     fs.writeFileSync(filePath, file.buffer);
 
-    // Create media record
     const media = new this.mediaModel({
       ownerId: user._id,
       fileName: file.originalname,
@@ -105,7 +98,6 @@ export class MediaService {
       throw new NotFoundException('Media not found');
     }
 
-    // Check if user has access
     if (!this.hasAccess(media, user)) {
       throw new ForbiddenException('Access denied to this media');
     }
@@ -120,17 +112,14 @@ export class MediaService {
       throw new NotFoundException('Media not found');
     }
 
-    // Only owner can delete
     if (media.ownerId.toString() !== user._id.toString()) {
       throw new ForbiddenException('Only the owner can delete this media');
     }
 
-    // Delete file from disk
     if (fs.existsSync(media.filePath)) {
       fs.unlinkSync(media.filePath);
     }
 
-    // Delete media record
     await this.mediaModel.findByIdAndDelete(id);
   }
 
@@ -147,7 +136,6 @@ export class MediaService {
       throw new NotFoundException('Media not found');
     }
 
-    // Only owner can view permissions
     if (media.ownerId.toString() !== user._id.toString()) {
       throw new ForbiddenException('Only the owner can view permissions');
     }
@@ -170,7 +158,6 @@ export class MediaService {
       throw new NotFoundException('Media not found');
     }
 
-    // Only owner can manage permissions
     if (media.ownerId.toString() !== user._id.toString()) {
       throw new ForbiddenException('Only the owner can manage permissions');
     }
@@ -212,12 +199,10 @@ export class MediaService {
   }
 
   private hasAccess(media: MediaDocument, user: UserDocument): boolean {
-    // Owner has access
     if (media.ownerId.toString() === user._id.toString()) {
       return true;
     }
 
-    // Check if user is in allowed list
     return media.allowedUserIds.some(
       allowedId => allowedId.toString() === user._id.toString(),
     );

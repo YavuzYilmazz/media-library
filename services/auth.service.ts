@@ -19,16 +19,13 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     const { email, password, name } = registerDto;
 
-    // Check if user exists
     const existingUser = await this.userService.findByEmail(email);
     if (existingUser) {
       throw new BadRequestException('User with this email already exists');
     }
 
-    // Create user
     const user = await this.userService.create(email, password, name);
 
-    // Generate tokens
     const tokens = await this.generateTokens(user._id, user.email);
 
     return {
@@ -45,13 +42,11 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    // Find user
     const user = await this.userService.findByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Validate password
     const isPasswordValid = await this.userService.validatePassword(
       user,
       password,
@@ -60,7 +55,6 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Generate tokens
     const tokens = await this.generateTokens(user._id, user.email);
 
     return {

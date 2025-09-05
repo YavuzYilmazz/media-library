@@ -8,7 +8,6 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const logger = new Logger('Bootstrap');
 
-  // Setup middleware and swagger
   AppModule.setupMiddleware(app);
   AppModule.setupSwagger(app);
 

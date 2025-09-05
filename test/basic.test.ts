@@ -42,12 +42,10 @@ describe('Basic Tests', () => {
     allowedUsers.push(targetUser);
     expect(allowedUsers).toContain(targetUser);
 
-    // Test adding another user
     const newUser = 'user456';
     allowedUsers.push(newUser);
     expect(allowedUsers).toContain(newUser);
 
-    // Test removing a user
     const indexToRemove = allowedUsers.indexOf('user123');
     if (indexToRemove > -1) {
       allowedUsers.splice(indexToRemove, 1);

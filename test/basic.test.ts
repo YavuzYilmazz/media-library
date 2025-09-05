@@ -2,7 +2,6 @@
  * Basic unit tests for the Media Library Backend
  */
 describe('Basic Tests', () => {
-  // Simple test to verify basic functionality
   test('should add two numbers correctly', () => {
     const result = 2 + 3;
     expect(result).toBe(5);
@@ -15,7 +14,6 @@ describe('Basic Tests', () => {
     expect(result).toBe('Hello World');
   });
 
-  // Mock test for JWT token validation
   test('should validate JWT token format', () => {
     const mockToken =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -26,7 +24,6 @@ describe('Basic Tests', () => {
     expect(parts[2]).toBeDefined();
   });
 
-  // Mock test for file validation
   test('should validate JPEG file extension', () => {
     const fileName = 'test-image.jpg';
     const extension = fileName.split('.').pop();

@@ -248,7 +248,6 @@ export class MediaController {
   }
 
   @Post(':id/permissions')
-  @UsePipes(new JoiValidationPipe(mediaPermissionSchema))
   @ApiOperation({ summary: 'Manage media file permissions' })
   @ApiResponse({ 
     status: 200, 

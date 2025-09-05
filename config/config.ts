@@ -1,6 +1,7 @@
 import { Injectable, Module } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 
+// Load environment variables
 dotenv.config();
 
 @Injectable()

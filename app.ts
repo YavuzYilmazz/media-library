@@ -13,7 +13,6 @@ import * as rateLimit from 'express-rate-limit';
 
 import { ConfigService, ConfigModule as CustomConfigModule } from './config/config';
 import { GlobalErrorFilter } from './middleware/error.middleware';
-import { ValidationMiddleware } from './middleware/validation.middleware';
 
 // Controllers
 import { AuthController } from './controllers/auth.controller';

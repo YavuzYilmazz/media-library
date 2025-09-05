@@ -22,10 +22,14 @@
     "types": ["node"]
   },
   "include": [
-    "**/*.ts"
+    "src/**/*.ts",
+    "utils/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "test/**/*.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ]
 }

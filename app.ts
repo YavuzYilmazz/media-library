@@ -12,7 +12,7 @@ import * as cors from 'cors';
 import * as rateLimit from 'express-rate-limit';
 
 import { ConfigService, ConfigModule as CustomConfigModule } from './config/config';
-import { GlobalErrorFilter } from './middleware/error.middleware';
+import { GlobalErrorFilter } from './middlewares/error.middleware';
 
 // Controllers
 import { AuthController } from './controllers/auth.controller';
@@ -30,8 +30,8 @@ import { User, UserSchema } from './models/user.model';
 import { Media, MediaSchema } from './models/media.model';
 
 // Middleware & Guards
-import { JwtAuthGuard } from './middleware/auth.middleware';
-import { JwtStrategy } from './middleware/auth.middleware';
+import { JwtAuthGuard } from './middlewares/auth.middleware';
+import { JwtStrategy } from './middlewares/auth.middleware';
 
 @Module({
   imports: [

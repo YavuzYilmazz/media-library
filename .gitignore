@@ -8,3 +8,5 @@ coverage/
 *.jpeg
 *.jpg
 *.sh
+TEST_SUMMARY.md
+logs/

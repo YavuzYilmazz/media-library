@@ -19,10 +19,10 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../middleware/auth.middleware';
+import { JwtAuthGuard } from '../middlewares/auth.middleware';
 import { MediaService } from '../services/media.service';
 import { UploadMediaDto, MediaPermissionDto, MediaQueryDto, mediaPermissionSchema } from '../validators/media.validator';
-import { JoiValidationPipe } from '../middleware/joi-validation.pipe';
+import { JoiValidationPipe } from '../middlewares/joi-validation.pipe';
 import * as fs from 'fs';
 
 @ApiTags('Media')

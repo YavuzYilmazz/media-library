@@ -2,7 +2,7 @@ import { Controller, Post, Body, HttpCode, HttpStatus, UsePipes } from '@nestjs/
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from '../services/auth.service';
 import { RegisterDto, LoginDto, RefreshTokenDto, registerSchema, loginSchema, refreshTokenSchema } from '../validators/auth.validator';
-import { JoiValidationPipe } from '../middleware/joi-validation.pipe';
+import { JoiValidationPipe } from '../middlewares/joi-validation.pipe';
 
 @ApiTags('Authentication')
 @Controller('auth')

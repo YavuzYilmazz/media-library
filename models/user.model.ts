@@ -5,6 +5,7 @@ export type UserDocument = User & Document;
 
 @Schema({
   timestamps: true,
+  versionKey: false,
   toJSON: {
     transform: (doc, ret) => {
       delete ret.passwordHash;

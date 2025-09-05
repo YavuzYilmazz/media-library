@@ -1,6 +1,7 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { AuthGuard } from '@nestjs/passport';
 import { ConfigService } from '../config/config';
 import { UserService } from '../services/user.service';
 
@@ -27,28 +28,4 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 }
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtStrategy: JwtStrategy) {}
-
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
-    
-    if (!token) {
-      throw new UnauthorizedException('No token provided');
-    }
-
-    try {
-      const payload = this.jwtStrategy.validate(token);
-      request.user = payload;
-      return true;
-    } catch (error) {
-      throw new UnauthorizedException('Invalid token');
-    }
-  }
-
-  private extractTokenFromHeader(request: any): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
-  }
-}
+export class JwtAuthGuard extends AuthGuard('jwt') {}

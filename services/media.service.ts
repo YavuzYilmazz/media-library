@@ -18,8 +18,13 @@ export class MediaService {
     file: any,
     user: UserDocument,
   ): Promise<MediaDocument> {
+    // Check if file exists
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+
     // Validate file type (only JPEG)
-    if (!file.mimetype.includes('jpeg') && !file.mimetype.includes('jpg')) {
+    if (!file.mimetype || (!file.mimetype.includes('jpeg') && !file.mimetype.includes('jpg'))) {
       throw new BadRequestException('Only JPEG files are allowed');
     }
 

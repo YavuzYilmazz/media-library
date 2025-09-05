@@ -22,8 +22,11 @@ export class RegisterDto {
   @ApiProperty({ example: 'user@example.com' })
   email: string;
 
-  @ApiProperty({ example: 'Passw0rd!', minLength: 8 })
+  @ApiProperty({ example: 'Passw0rd!', minLength: 6 })
   password: string;
+
+  @ApiProperty({ example: 'John Doe' })
+  name: string;
 }
 
 export class LoginDto {

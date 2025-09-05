@@ -10,13 +10,14 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async create(email: string, password: string): Promise<UserDocument> {
+  async create(email: string, password: string, name: string): Promise<UserDocument> {
     const saltRounds = 12;
     const passwordHash = await bcrypt.hash(password, saltRounds);
     
     const user = new this.userModel({
       email,
       passwordHash,
+      name,
       role: 'user',
     });
 

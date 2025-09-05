@@ -13,21 +13,21 @@ export const mediaQuerySchema = Joi.object({
 
 export class UploadMediaDto {
   @ApiProperty({ type: 'string', format: 'binary' })
-  file: any;
+    file: any;
 }
 
 export class MediaPermissionDto {
   @ApiProperty({ example: '507f1f77bcf86cd799439011' })
-  userId: string;
+    userId: string;
 
   @ApiProperty({ example: 'add', enum: ['add', 'remove'] })
-  action: 'add' | 'remove';
+    action: 'add' | 'remove';
 }
 
 export class MediaQueryDto {
   @ApiProperty({ required: false })
-  page?: number;
+    page?: number;
 
   @ApiProperty({ required: false })
-  limit?: number;
+    limit?: number;
 }

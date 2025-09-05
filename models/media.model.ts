@@ -9,25 +9,25 @@ export type MediaDocument = Media & Document;
 })
 export class Media {
   @Prop({ required: true, type: Types.ObjectId, ref: 'User' })
-  ownerId: Types.ObjectId;
+    ownerId: Types.ObjectId;
 
   @Prop({ required: true })
-  fileName: string;
+    fileName: string;
 
   @Prop({ required: true })
-  filePath: string;
+    filePath: string;
 
   @Prop({ required: true })
-  mimeType: string;
+    mimeType: string;
 
   @Prop({ required: true })
-  size: number;
+    size: number;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
-  allowedUserIds: Types.ObjectId[];
+    allowedUserIds: Types.ObjectId[];
 
   @Prop({ default: Date.now })
-  createdAt: Date;
+    createdAt: Date;
 }
 
 export const MediaSchema = SchemaFactory.createForClass(Media);

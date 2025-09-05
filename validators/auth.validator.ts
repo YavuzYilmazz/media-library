@@ -20,24 +20,24 @@ export const refreshTokenSchema = Joi.object({
 
 export class RegisterDto {
   @ApiProperty({ example: 'user@example.com' })
-  email: string;
+    email: string;
 
   @ApiProperty({ example: 'Passw0rd!', minLength: 6 })
-  password: string;
+    password: string;
 
   @ApiProperty({ example: 'John Doe' })
-  name: string;
+    name: string;
 }
 
 export class LoginDto {
   @ApiProperty({ example: 'user@example.com' })
-  email: string;
+    email: string;
 
   @ApiProperty({ example: 'Passw0rd!' })
-  password: string;
+    password: string;
 }
 
 export class RefreshTokenDto {
   @ApiProperty()
-  refreshToken: string;
+    refreshToken: string;
 }

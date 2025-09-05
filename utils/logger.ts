@@ -31,24 +31,21 @@ export class Logger {
             ),
           ),
         }),
-        // Error logs
         new winston.transports.File({
           filename: path.join(logsDir, 'error.log'),
           level: 'error',
-          maxsize: 5242880, // 5MB
+          maxsize: 5242880,
           maxFiles: 5,
         }),
-        // Warning logs
         new winston.transports.File({
           filename: path.join(logsDir, 'warn.log'),
           level: 'warn',
-          maxsize: 5242880, // 5MB
+          maxsize: 5242880,
           maxFiles: 5,
         }),
-        // Combined logs
         new winston.transports.File({
           filename: path.join(logsDir, 'combined.log'),
-          maxsize: 5242880, // 5MB
+          maxsize: 5242880,
           maxFiles: 5,
         }),
       ],
